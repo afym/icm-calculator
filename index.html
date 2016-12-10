@@ -45,15 +45,33 @@
             this.height = $("#height");
             this.button = $("#calculate-button");
             this.messageBox = $("#result-box");
-
+			this.ranges = [
+				{"min" : 18.5, "max" : 24.9, "message" : "Promedio"},
+				{"min" : 25, "max" : 29.9, "message" : "Aumentado"},
+				{"min" : 30, "max" : 34.9, "message" : "Moderado"},
+				{"min" : 35, "max" : 39.9, "message" : "Severo"},
+				{"min" : 40, "max" : 999999999, "message" : "Mu servero"}
+			];
             this.getResult = function()
             {
 			   var icm = this.weigth.val() / Math.pow(this.height.val(), 2);
 			   icm = Math.round(icm * 100) / 100;
-               this.messageBox.html(icm + " <strong>Kg/m2</strong>");
+               this.messageBox.html(icm + " <strong>Kg/m2</strong>" + "<p>" + this.getMessage(icm) + "</p>");
 			   this.messageBox.show();
             }
 
+			this.getMessage = function(icm) 
+			{
+				var result = "Fuera de rango";
+
+				for (var index in this.ranges) {
+					if (this.ranges[index]["min"] <= icm && this.ranges[index]["max"] >= icm) {
+						result = this.ranges[index]["message"];
+					}
+				}
+
+				return result;
+			}
 
             this.addEvents = function()
             {
