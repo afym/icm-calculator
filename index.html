@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Simple Javascript application</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <style type="text/css">
+        .space-element {margin-top : 2%;}
+        .hide-element {display : none;}
+      </style>
+   </head>
+    
+   <body>    
+    <div class="container">
+        <h1 class="text-center">Calculadora ICM</h1>
+        <hr>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="types">Ingresa tu peso (Kg):</label>
+                <div class="col-sm-6">
+                   <input id="weigth" type="text" class="form-control"/>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="control-label col-sm-4" for="types">Ingresa tu altura en (m):</label>
+                <div class="col-sm-6">
+					<input id="height" type="text" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-sm-10 space-element">
+                        <button id="calculate-button" class="btn btn-primary btn-lg col-sm-7" type="button">Calcular</button>
+                    </div>
+                </div>
+                <hr>
+                <div id="result-box" class="warning warning-danger text-center hide-element" role="alert"></div>
+            </div>
+        </form>
+    </div>
+     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        Calculate  = function() 
+        {
+            this.weigth = $("#weigth");
+            this.height = $("#height");
+            this.button = $("#calculate-button");
+            this.messageBox = $("#result-box");
+
+            this.getResult = function()
+            {
+			   var icm = this.weigth.val() / Math.pow(this.height.val(), 2);
+			   icm = Math.round(icm * 100) / 100;
+               this.messageBox.html(icm + " <strong>Kg/m2</strong>");
+			   this.messageBox.show();
+            }
+
+
+            this.addEvents = function()
+            {
+                var classThis = this;
+
+                this.button.click(function(){
+                    classThis.getResult();
+                });
+            }
+        };
+
+
+        $(function(){
+            var calculate = new Calculate();
+            calculate.addEvents();
+        });
+    </script>
+   </body>
+</html>
